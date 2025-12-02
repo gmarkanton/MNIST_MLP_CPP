@@ -63,6 +63,6 @@ The current configuration uses a network structure commonly suitable for the MNI
 
 ---
 
-## ⚖️ License
+## License
 
 This project is licensed under the MIT License.
