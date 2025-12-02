@@ -1,81 +1,68 @@
-# MNIST MLP — Neural Network from Scratch in Modern C++
+# C++ Multi-Layer Perceptron (MLP) for MNIST Classification
 
-This project implements a fully manual Multilayer Perceptron for MNIST classification using only C++17 STL and OpenCV for visualization.  
-All components — forward pass, backward pass, weight updates, batching, and initialization — are written from scratch without any machine-learning frameworks.
+## Project Summary
 
----
-
-# Features
-- Custom MLP architecture: 784 → 256 → 64 → 10
-- He initialization
-- ReLU / LeakyReLU activation
-- Manual forward pass & backpropagation
-- Mini-batch gradient descent
-- Gradient clipping
-- Save/load weights
-- MNIST image visualization with OpenCV
+This repository presents a **Multi-Layer Perceptron (MLP) implementation built entirely from scratch in C++**. The project's primary goal is to classify handwritten digits from the standard **MNIST dataset**. By implementing all fundamental mechanisms—from data loading to gradient updates—without relying on high-level deep learning frameworks (e.g., PyTorch, TensorFlow), this code demonstrates a deep, low-level understanding of both C++ efficiency and the mathematical core of neural networks.
 
 ---
 
-# Project Structure
-src/
-mlp.cpp → MLP implementation
-layer.hpp → Dense layer
-utils.hpp → MNIST loader & helpers
-main.cpp → Entry point
+## Technical Highlights
 
-data/
-(empty by default — MNIST not included)
+The implementation showcases robust and advanced features critical for modern machine learning:
 
-CMakeLists.txt
-README.md
-LICENSE
-
-
----
-
-# Build Instructions
-
-# Requirements
-- C++17
-- CMake ≥ 3.10
-- OpenCV
-
-# Build
-mkdir build
-cd build
-cmake 
-
+* **Custom Core Engine:** Full, manual implementation of the **Forward Pass** and the **Backpropagation** algorithm, calculating all gradients (dL/dW, dL/dBias) directly in C++.
+* **Robust Training Mechanics:**
+    * **Weight Initialization:** Uses **He Initialization** suitable for ReLU-based networks.
+    * **Activation:** Implements the **Leaky ReLU** function.
+    * **Optimization:** Supports **Mini-Batch Gradient Descent**.
+    * **Stability:** Includes **Softmax** with numerical stability (using the log-sum-exp trick) and **Cross-Entropy Loss**.
+    * **Mitigation:** Features **Gradient Clipping** (L2-norm) to manage exploding gradients.
+* **Low-Level Data Handling:** Implements a native reader for the MNIST **binary file format**, correctly handling **Endianness** (`__builtin_bswap32`) for data integrity.
+* **Visualization:** Integration with **OpenCV** allows for displaying the input image alongside the network's prediction and loss statistics.
 
 ---
 
-# Run Training
-./mnist_mlp --train
+## Network Architecture
 
+The current configuration uses a network structure commonly suitable for the MNIST task:
 
+| Layer Type | Input Size | Output Size | Activation |
+| :--- | :--- | :--- | :--- |
+| **Input** | 784 (28x28 pixels) | 784 | N/A |
+| **Hidden Layer 1** | 784 | 256 | Leaky ReLU |
+| **Hidden Layer 2** | 256 | 64 | Leaky ReLU |
+| **Output Layer** | 64 | 10 | Softmax |
 
-# Run Testing
-./mnist_mlp --test
-
----
-
-# MNIST Dataset
-
-Download the four official MNIST files from:
-
-https://yann.lecun.com/exdb/mnist/
-
-Place them in the `data/` directory:
-
-data/train-images.idx3-ubyte
-data/train-labels.idx1-ubyte
-data/t10k-images.idx3-ubyte
-data/t10k-labels.idx1-ubyte
-
-
-*(The dataset is not included in this repository due to licensing restrictions.)*
+**Hyperparameters:**
+* **Learning Rate ($\eta$):** $0.0001$
+* **Batch Size:** 32
+* **Loss Function:** Cross-Entropy Loss
 
 ---
 
-## 📄 License
-MIT License
+## Getting Started
+
+### Prerequisites
+
+1.  **C++ Environment:** A C++ compiler supporting C++11 or later (Tested with GCC/Clang via CLion/CMake).
+2.  **OpenCV Library:** A local installation of the **OpenCV** library is required and must be correctly linked via the project's `CMakeLists.txt` file.
+3.  **MNIST Dataset:** The original four binary files must be downloaded and placed into the **`data/MNIST`** directory inside the project root:
+    * `train-images.idx3-ubyte`
+    * `train-labels.idx1-ubyte`
+    * `t10k-images.idx3-ubyte`
+    * `t10k-labels.idx1-ubyte`
+
+### Build and Execution
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone [YOUR_REPO_URL]
+    ```
+2.  **Build:** Open the project in CLion. CMake should automatically configure the build process based on `CMakeLists.txt`.
+3.  **Run:** Execute the compiled program. The application is command-line driven, prompting the user to select the operating mode (**TRAIN** or **TEST**) and configuration details (e.g., weight initialization or loading).
+
+---
+
+## ⚖️ License
+
+This project is licensed under the MIT License.
