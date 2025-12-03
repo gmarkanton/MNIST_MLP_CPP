@@ -62,7 +62,7 @@ The current configuration uses a network structure commonly suitable for the MNI
 3.  **Run:** Execute the compiled program. The application is command-line driven, prompting the user to select the operating mode (**TRAIN** or **TEST**) and configuration details (e.g., weight initialization or loading).
 
 ---
-
+[Future Work] The current monolithic structure will be refactored into modular C++ header/source files for improved maintainability.
 ## License
 
 This project is licensed under the MIT License.
